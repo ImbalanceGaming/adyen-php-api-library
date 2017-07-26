@@ -12,9 +12,12 @@ class Client
     const USER_AGENT_SUFFIX             = "adyen-php-api-library/";
     const ENDPOINT_TEST                 = "https://pal-test.adyen.com";
     const ENDPOINT_LIVE                 = "https://pal-live.adyen.com";
+	const ENDPOINT_MARKET_PAY_TEST      = "https://cal-test.adyen.com";
+	const ENDPOINT_MARKET_PAY_LIVE      = "https://cal-live.adyen.com";
     const ENPOINT_TEST_DIRECTORY_LOOKUP = "https://test.adyen.com/hpp/directory.shtml";
     const ENPOINT_LIVE_DIRECTORY_LOOKUP = "https://live.adyen.com/hpp/directory.shtml";
     const API_VERSION                   = "v25";
+	const MARKET_PAY_API_VERSION        = "v2";
 
     /**
      * @var Adyen_Config $config
@@ -81,10 +84,12 @@ class Client
         if($environment == \Adyen\Environment::TEST) {
             $this->_config->set('environment', \Adyen\Environment::TEST);
             $this->_config->set('endpoint', self::ENDPOINT_TEST);
+            $this->_config->set('marketPayEndpoint', self::ENDPOINT_MARKET_PAY_TEST);
             $this->_config->set('endpointDirectorylookup', self::ENPOINT_TEST_DIRECTORY_LOOKUP);
         } elseif($environment == \Adyen\Environment::LIVE) {
             $this->_config->set('environment', \Adyen\Environment::LIVE);
             $this->_config->set('endpoint', self::ENDPOINT_LIVE);
+	        $this->_config->set('marketPayEndpoint', self::ENDPOINT_MARKET_PAY_LIVE);
             $this->_config->set('endpointDirectorylookup', self::ENPOINT_LIVE_DIRECTORY_LOOKUP);
         } else {
             // environment does not exists
@@ -152,6 +157,16 @@ class Client
     {
         return self::API_VERSION;
     }
+
+	/**
+	 * Get the version of the API endpoint
+	 *
+	 * @return string
+	 */
+	public function getMarketPayApiVersion()
+	{
+		return self::MARKET_PAY_API_VERSION;
+	}
 
     /**
      * @param HttpClient\ClientInterface $httpClient
